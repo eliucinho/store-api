@@ -21,15 +21,15 @@ public class PriceController {
     private PriceService priceService;
 
     @GetMapping("/consulta-precios")
-    public ResponseEntity<List<PriceDTO>> getPrices(
+    public ResponseEntity<List<Price>> getPrices(
             @RequestParam Long brandId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date startDate,
             @RequestParam Long productId) {
         try {
-            List<PriceDTO> result = priceService.getPrices(brandId, startDate, productId);
+            List<Price> result = priceService.getPrices(brandId, startDate, productId);
             return ResponseEntity.ok(result);
         } catch (ResponseStatusException e) {
-            return ResponseEntity.status(e.getStatusCode()).body(null);
+            return ResponseEntity.status(e.getStatus()).body(null);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
         }

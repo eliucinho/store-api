@@ -7,5 +7,5 @@ import java.util.Date;
 import java.util.List;
 
 public interface PriceService {
-    List<PriceDTO> getPrices(Long brandId, Date startDate, Long productId);
+    List<Price> getPrices(Long brandId, Date startDate, Long productId);
 }

@@ -42,7 +42,7 @@ public class PriceServiceTest extends PriceServiceTestConfig {
 
         when(priceMapper.priceToPriceDTO(any(Price.class))).thenReturn(new PriceDTO());
 
-        List<PriceDTO> result = priceService.getPrices(brandId, startDate, productId);
+        List<Price> result = priceService.getPrices(brandId, startDate, productId);
 
         verify(priceRepository, times(1)).findByBrandIdAndStartDateAndProductId(eq(brandId), eq(startDate), eq(productId));
 
@@ -61,7 +61,7 @@ public class PriceServiceTest extends PriceServiceTestConfig {
         try {
             priceService.getPrices(brandId, startDate, productId);
         } catch (ResponseStatusException e) {
-            assert (e.getStatusCode().value() == 204);
+            assert (e.getStatus().value() == 204);
         }
 
         verify(priceRepository, times(1)).findByBrandIdAndStartDateAndProductId(eq(brandId), eq(startDate), eq(productId));

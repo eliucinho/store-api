@@ -1,30 +1,26 @@
 package com.eliud.store.api.config;
 import com.eliud.store.api.db.entities.Price;
 import com.eliud.store.api.db.repositories.PriceRepository;
-import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import lombok.RequiredArgsConstructor;
 import java.util.Arrays;
 
-@Component
-@RequiredArgsConstructor
+@Configuration
 public class DataLoader {
 
     private final PriceRepository priceRepository;
 
-    @PostConstruct
-    public void init() {
-        try {
-            insertTestData();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    @Autowired
+    public DataLoader(PriceRepository priceRepository) {
+        this.priceRepository = priceRepository;
     }
 
-    private void insertTestData() throws ParseException {
+    @PostConstruct
+    public void init() throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
         Price price1 = Price.builder()
@@ -70,8 +66,7 @@ public class DataLoader {
                 .price(38.95)
                 .curr("EUR")
                 .build();
-        priceRepository.saveAll(Arrays.asList(price1, price2, price3, price4));
 
-        System.out.println("data loaded");
+        priceRepository.saveAll(Arrays.asList(price1, price2, price3, price4));
     }
 }

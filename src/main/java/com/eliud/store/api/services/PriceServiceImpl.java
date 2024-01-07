@@ -18,19 +18,15 @@ public class PriceServiceImpl implements PriceService {
     @Autowired
     private PriceRepository priceRepository;
 
-    @Autowired
-    private PriceMapper priceMapper;
 
     @Override
-    public List<PriceDTO> getPrices(Long brandId, Date startDate, Long productId) {
+    public List<Price> getPrices(Long brandId, Date startDate, Long productId) {
         List<Price> prices = priceRepository.findByBrandIdAndStartDateAndProductId(brandId, startDate, productId);
 
         if (prices.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NO_CONTENT, "List is empty");
         }
 
-        return prices.stream()
-                .map(priceMapper::priceToPriceDTO)
-                .collect(Collectors.toList());
+        return prices;
     }
 }
