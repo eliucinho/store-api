@@ -59,3 +59,16 @@ Endpoint para obtener precios según los parámetros especificados.
 ]
 ```
 
+
+### Importar Test Cases
+
+1. Descarga el archivo [Test Cases.postman_collection.json](src/main/resources/postman/Test%20Cases.postman_collection.json).
+
+2. Abre Postman y haz clic en "Importar" en la esquina superior izquierda.
+
+3. Selecciona "Elije Archivo" y selecciona el archivo descargado.
+
+4. La colección "Test Cases" debería aparecer en tu panel izquierdo.
+5. Ejecuta las solicitudes y verifica los resultados en la pestaña "Tests" de cada solicitud.
+
+
