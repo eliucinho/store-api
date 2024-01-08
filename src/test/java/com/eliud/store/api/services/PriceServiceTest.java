@@ -2,8 +2,7 @@ package com.eliud.store.api.services;
 
 import com.eliud.store.api.db.entities.Price;
 import com.eliud.store.api.db.repositories.PriceRepository;
-import com.eliud.store.api.mappers.PriceMapper;
-import com.eliud.store.api.models.PriceDTO;
+import com.eliud.store.api.models.PriceRequest;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,16 +20,13 @@ public class PriceServiceTest extends PriceServiceTestConfig {
     @Mock
     private PriceRepository priceRepository;
 
-    @Mock
-    private PriceMapper priceMapper;
-
     @InjectMocks
     private PriceServiceImpl priceService;
 
     @Test
     public void testGetPrices_Success() {
         Long brandId = 1L;
-        Date startDate = new Date();
+        String startDate = "2024-01-14 21:00:00";
         Long productId = 2L;
 
         Price price1 = new Price();
@@ -40,19 +36,17 @@ public class PriceServiceTest extends PriceServiceTestConfig {
         when(priceRepository.findByBrandIdAndStartDateAndProductId(anyLong(), any(Date.class), anyLong()))
                 .thenReturn(Arrays.asList(price1, price2));
 
-        when(priceMapper.priceToPriceDTO(any(Price.class))).thenReturn(new PriceDTO());
 
         List<Price> result = priceService.getPrices(brandId, startDate, productId);
 
-        verify(priceRepository, times(1)).findByBrandIdAndStartDateAndProductId(eq(brandId), eq(startDate), eq(productId));
+        verify(priceRepository, times(1)).findByBrandIdAndStartDateAndProductId(eq(brandId), any(), eq(productId));
 
-        verify(priceMapper, times(2)).priceToPriceDTO(any(Price.class));
     }
 
     @Test
     public void testGetPrices_EmptyList() {
         Long brandId = 1L;
-        Date startDate = new Date();
+        String startDate = "2024-01-14 21:00:00";
         Long productId = 2L;
 
         when(priceRepository.findByBrandIdAndStartDateAndProductId(anyLong(), any(Date.class), anyLong()))
@@ -64,8 +58,6 @@ public class PriceServiceTest extends PriceServiceTestConfig {
             assert (e.getStatus().value() == 204);
         }
 
-        verify(priceRepository, times(1)).findByBrandIdAndStartDateAndProductId(eq(brandId), eq(startDate), eq(productId));
-
-        verify(priceMapper, never()).priceToPriceDTO(any(Price.class));
+        verify(priceRepository, times(1)).findByBrandIdAndStartDateAndProductId(eq(brandId), any(), eq(productId));
     }
 }

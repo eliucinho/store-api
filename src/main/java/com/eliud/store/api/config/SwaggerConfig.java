@@ -15,8 +15,8 @@ public class SwaggerConfig {
                 .components(new Components())
                 .info(
                         new Info()
-                                .title("Taller Open API v3")
-                                .description("Como implementar en Springboot")
+                                .title("Store API")
+                                .description("API for get prices")
                 );
     }
 }
